@@ -1,0 +1,29 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: geteway
+  zipkin:
+    base-url: http://localhost:9411/
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:7901/eureka/
+  instance:
+    hostname: localhost
+    instance-id: gateway
+zuul:
+  # 路由映射
+  routes:
+    consumer: consumer-gateway/**
+  # 不允许通过服务名访问
+  ignored-services:
+  # - consumer
+  # 通过正则设置
+  # - /*-consumer*/**
+
+  # 阻止网关过滤头信息，将信息传递到后边的服务中去
+  sensitive-headers:
+logging:
+  level:
+    org.springframework: DEBUG
